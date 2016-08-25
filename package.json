@@ -1,0 +1,39 @@
+{
+  "name": "clock-o-doro",
+  "version": "1.0.0",
+  "description": "a pomodoro timer of the highest sophistication",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack",
+    "test": "mocha",
+    "wd": "wdio wdio.conf.js",
+    "sel": "java -jar selenium-server-standalone-2.53.0.jar"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andy-young/clock-o-doro.git"
+  },
+  "author": "Jeff Duke and Andy Young",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andy-young/clock-o-doro/issues"
+  },
+  "homepage": "https://github.com/andy-young/clock-o-doro#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chromedriver": "^2.23.1",
+    "eslint": "^3.3.1",
+    "jshint": "^2.9.3",
+    "mocha": "^3.0.2",
+    "mocha-loader": "^0.7.1",
+    "wdio": "^0.3.3",
+    "wdio-mocha-framework": "^0.4.0",
+    "webdriverio": "^4.2.8",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
+  }
+}
