@@ -24,7 +24,7 @@ class Timer {
   }
 }
 
-
+module.exports = Timer;
 
 
 //start(time = Date.now()) {

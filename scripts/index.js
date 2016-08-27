@@ -21,8 +21,4 @@ class Timer {
   pause() {
     console.log('timer paused');
   }
-
-
-
-
 }
