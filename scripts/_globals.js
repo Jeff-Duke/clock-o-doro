@@ -7,7 +7,8 @@ var _globals = {
   $startButton: $('#start-button'),
   $pauseButton: $('#pause-button'),
   $resumeButton: $('#resume-button'),
-  $resetButton: $('#reset-button')
+  $resetButton: $('#reset-button'),
+  $timerDisplay: $('#timer-display')
 };
 
 module.exports = _globals;
