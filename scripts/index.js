@@ -1,3 +1,2 @@
 require('./timer');
-
 require('./scripts');

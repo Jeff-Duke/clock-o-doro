@@ -25,8 +25,8 @@ class Timer {
   pause() {
     console.log('timer paused');
   }
-
 }
+
 module.exports = Timer;
 
 //once seconds === 0 => call the break Timer
