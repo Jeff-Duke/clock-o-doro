@@ -8,3 +8,14 @@
 // function timer(minutes) {
 //   return humanReadable(minutes * 60);
 // }
+const Timer = require('./timer');
+
+var timer = new Timer(2);
+console.log(timer);
+
+function showSomething() {
+  // timer.start();
+}
+
+
+showSomething();
