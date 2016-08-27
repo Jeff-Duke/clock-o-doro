@@ -1,16 +1,28 @@
-require('./clockodoro');
+class Timer {
+  constructor(sandwich) {
+    this.duration = sandwich || 1;
+    this.duration = this.duration * 60000;
+    this.startTime = Date.now();
+    this.endTime = this.startTime + this.duration;
+    this.elapsedTime = Date.now() - this.startTime;
+    this.remainingTime = this.endTime - Date.now();
+  }
 
-function demonstrateCountdown(duration) {
-  const startTime = Date.now();
-  const endTime = startTime + duration;
-  console.log('Hi');
-  setTimeout(function tick() {
-    const now = Date.now();
-    if (now < endTime) {
-      console.log(Math.floor((endTime - now) / 1000));
-      setTimeout(tick, 1000);
-    }
-  }, 0);
+  start() {
+    console.log('timer started');
+    console.log('start time: ' + this.startTime);
+  }
+
+  tick() {
+    console.log(this.endTime - Date.now());
+    setTimeout(this.tick.bind(this), 60);
+  }
+
+  pause() {
+    console.log('timer paused');
+  }
+
+
+
+
 }
-
-demonstrateCountdown(10000);
