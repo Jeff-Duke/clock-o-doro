@@ -1,3 +1,7 @@
+const render = require('./render');
+
+
+
 // function humanReadable(seconds) {
 // var SS = seconds % 60;
 // var MM = Math.floor(seconds / 60) % 60;
@@ -10,12 +14,11 @@
 // }
 const Timer = require('./timer');
 
-var timer = new Timer(2);
+var timer = new Timer(.1);
 console.log(timer);
 
 function showSomething() {
-  // timer.start();
+  timer.start();
 }
-
 
 showSomething();

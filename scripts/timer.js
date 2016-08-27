@@ -1,4 +1,5 @@
 const _globals = require('./_globals');
+const render = require('./render');
 
 
 class Timer {
@@ -18,8 +19,14 @@ class Timer {
   }
 
   tick() {
-    console.log(this.endTime - Date.now());
+    if(Date.now() <= this.endTime) {
     setTimeout(this.tick.bind(this), 60);
+    render(this);
+    }
+    else {
+      render(this);
+      return;
+    }
   }
 
   pause() {
