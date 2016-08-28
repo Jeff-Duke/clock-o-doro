@@ -2,7 +2,7 @@ const render = require('./render');
 const Timer = require('./timer');
 const _globals = require('./_globals');
 
-var clockodoro = {
+const Clockodoro = {
   workSessions: 0,
   breakSessions: 0,
   intervalDuration: _globals.$intervalInput.val(),
@@ -21,6 +21,7 @@ var clockodoro = {
       let timer = new Timer(this.breakDuration * 3);
       this.breakSessions += 1;
     }
+    return this.timer;
   },
 
   startTimer() {
@@ -39,18 +40,19 @@ var clockodoro = {
     }
   },
 
-  pause() {
+  pauseTimer() {
+    this.timer.state = 'paused';
     let pausedRemaining = this.remainingTime;
     let paused = setTimeout(this.tick);
     clearTimeout(paused);
   },
 
-  resume() {
+  resumeTimer() {
     let timer = new Timer(pausedRemaining);
   },
 
-  extend() {
+  extendTimer() {
   },
 };
 
-module.exports = clockodoro;
+module.exports = Clockodoro;

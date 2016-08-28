@@ -1,1 +1,2 @@
-require('./unit-tests.js');
+require('./timer-unit-tests');
+require('./clockodoro-unit-tests');
