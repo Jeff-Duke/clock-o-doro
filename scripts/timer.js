@@ -9,7 +9,15 @@ class Timer {
     this.startTime = Date.now();
     this.endTime = this.startTime + this.duration;
     this.elapsedTime = Date.now() - this.startTime;
-    this.remainingTime = this.endTime - Date.now();
+    this.remainingTime = this.remainingTime();
+  }
+
+  newTimer(inputTime) {
+    this.timer = new Timer(inputTime);
+  }
+
+  get remainingTime() {
+    return this.endTime - Date.now();
   }
 
   start() {
@@ -30,8 +38,16 @@ class Timer {
   }
 
   pause() {
-    console.log('timer paused');
+    //capture remaining time
+    //when pause is clicked again it will reset start time to current Date.now
+    //and add the remaining time that was captured to make a new end time.
   }
+
+  extend() {
+    this.endTime = this.endTime + 180000;
+  }
+
+
 }
 
 module.exports = Timer;

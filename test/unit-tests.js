@@ -7,7 +7,7 @@ describe('Timer', function() {
   beforeEach(function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
-    Date.now = this.rightNow;
+    Date.now = () => this.rightNow;
   });
 
   afterEach(function() {
@@ -21,13 +21,30 @@ describe('Timer', function() {
   it('should have a start time that is not null', function() {
     assert.isNotNull(timer.startTime);
   });
-});
 
+  context('should start and end', function(){
+   it('should be a function', function() {
+     assert.isFunction(Timer);
+   });
 
+   it('should return null if there is not a given start time', function() {
+     var returned = timer.end();
+     assert.isNull(returned);
+   });
 
+   it('should have a start time equal to date.now', function() {
+     var start = timer.start();
+     var expected = Date.now();
+     assert.equal(start, expected);
+   });
 
-
-
+   it('should return the end time if given a start time', function(){
+     timer.start();
+     var end = timer.end();
+     var expected = Date.now() + timer.duration;
+     assert.equal(end, expected);
+   });
+ });
 
 //
 // //write unit tests for the timer itself
