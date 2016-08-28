@@ -7,12 +7,10 @@ class Timer {
     this.duration = inputTime || 1;
     this.duration = this.duration * 60000;
     this.startTime = null;
-    // this.endTime = null;
-    // this.elapsedTime = null;
-    // this.remainingTime = null;
+    this.state = null;
   }
 
-  startTime(time = Date.now()) {
+  generateStartTime(time = Date.now()) {
     this.startTime = time;
     return this;
   }
@@ -23,50 +21,18 @@ class Timer {
   }
 
   get elapsedTime() {
-    return Date.now() - this.startTime;
+    if(!this.startTime) {return null;}
+    if( this.startTime) {return Date.now() - this.startTime; }
   }
 
   get remainingTime() {
-    return this.endTime - Date.now();
+    if(!this.startTime) {return null;}
+    if(this.startTime) {return this.endTime - Date.now(); }
   }
 
   get isElapsed() {
-    return Date.now() <= this.endTime;
+    return Date.now() >= this.endTime;
   }
-
-  startTimer() {
-    console.log('timer started');
-    console.log('start time: ' + this.startTime);
-    // this.tick();
-  }
-
-  tick() {
-    if(!this.isElapsed) {
-    setTimeout(this.tick.bind(this), 60);
-    render(this);
-    }
-    if(this.isElapsed) {
-      render(this);
-      return;
-    }
-  }
-
-  pause() {
-    var pausedRemaining = this.remainingTime;
-    var paused = setTimeout(this.tick);
-    clearTimeout(paused);
-  }
-
-  resume() {
-    var timer = new Timer(pausedRemaining);
-
-  }
-
-  extend() {
-    this.endTime = this.endTime + 180000;
-  }
-
-
 }
 
 module.exports = Timer;
