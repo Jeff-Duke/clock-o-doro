@@ -7,7 +7,7 @@ describe('Timer', function() {
   beforeEach(function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
-    Date.now = this.rightNow;
+    Date.now = () => this.rightNow;
   });
 
   afterEach(function() {
@@ -21,7 +21,36 @@ describe('Timer', function() {
   it('should have a start time that is not null', function() {
     assert.isNotNull(timer.startTime);
   });
+
+  it('should have an end time that is not null', function() {
+    assert.isNotNull(timer.endTime);
+  });
+
 });
+
+describe('Timer methods', function() {
+  var timer = new Timer();
+  beforeEach(function() {
+    this.rightNow = Date.now();
+    this.dateNow = Date.now;
+    Date.now = () => this.rightNow;
+  });
+
+  afterEach(function() {
+    Date.now = this.dateNow;
+  });
+
+  context('Start method', function() {
+    it('should be a function', function() {
+      assert.isFunction(timer.start);
+    });
+
+    it('should capture the moment of UNIX time in which it was envoked')
+  });
+
+
+});
+
 
 
 
