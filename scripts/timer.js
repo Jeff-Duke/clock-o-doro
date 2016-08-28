@@ -6,41 +6,60 @@ class Timer {
   constructor(inputTime) {
     this.duration = inputTime || 1;
     this.duration = this.duration * 60000;
-    this.startTime = Date.now();
-    this.endTime = this.startTime + this.duration;
-    this.elapsedTime = Date.now() - this.startTime;
-    this.remainingTime = this.remainingTime();
+    this.startTime = null;
+    // this.endTime = null;
+    // this.elapsedTime = null;
+    // this.remainingTime = null;
   }
 
-  newTimer(inputTime) {
-    this.timer = new Timer(inputTime);
+  startTime(time = Date.now()) {
+    this.startTime = time;
+    return this;
+  }
+
+  get endTime() {
+    if(!this.startTime) {return null;}
+    if( this.startTime) {return this.startTime + this.duration;}
+  }
+
+  get elapsedTime() {
+    return Date.now() - this.startTime;
   }
 
   get remainingTime() {
     return this.endTime - Date.now();
   }
 
-  start() {
+  get isElapsed() {
+    return Date.now() <= this.endTime;
+  }
+
+  startTimer() {
     console.log('timer started');
     console.log('start time: ' + this.startTime);
-    this.tick();
+    // this.tick();
   }
 
   tick() {
-    if(Date.now() <= this.endTime) {
+    if(!this.isElapsed) {
     setTimeout(this.tick.bind(this), 60);
     render(this);
     }
-    else {
+    if(this.isElapsed) {
       render(this);
       return;
     }
   }
 
   pause() {
-    //capture remaining time
-    //when pause is clicked again it will reset start time to current Date.now
-    //and add the remaining time that was captured to make a new end time.
+    var pausedRemaining = this.remainingTime;
+    var paused = setTimeout(this.tick);
+    clearTimeout(paused);
+  }
+
+  resume() {
+    var timer = new Timer(pausedRemaining);
+
   }
 
   extend() {

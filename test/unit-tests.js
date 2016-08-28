@@ -4,6 +4,7 @@ const Timer = require('../scripts/timer');
 
 describe('Timer', function() {
   var timer = new Timer();
+
   beforeEach(function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
@@ -22,29 +23,60 @@ describe('Timer', function() {
     assert.isNotNull(timer.startTime);
   });
 
-  context('should start and end', function(){
-   it('should be a function', function() {
-     assert.isFunction(Timer);
-   });
+  it('should have an end time that is not null', function() {
+    assert.isNotNull(timer.endTime);
+  });
 
-   it('should return null if there is not a given start time', function() {
-     var returned = timer.end();
-     assert.isNull(returned);
-   });
+});
 
-   it('should have a start time equal to date.now', function() {
-     var start = timer.start();
-     var expected = Date.now();
-     assert.equal(start, expected);
-   });
+describe('Timer methods', function() {
+  var timer = new Timer();
+  beforeEach(function() {
+    this.rightNow = Date.now();
+    this.dateNow = Date.now;
+    Date.now = () => this.rightNow;
+  });
 
-   it('should return the end time if given a start time', function(){
-     timer.start();
-     var end = timer.end();
-     var expected = Date.now() + timer.duration;
-     assert.equal(end, expected);
-   });
- });
+  afterEach(function() {
+    Date.now = this.dateNow;
+  });
+
+  context('Start method', function() {
+    it('should be a function', function() {
+      assert.isFunction(timer.start);
+    });
+
+    it('should capture the moment of UNIX time in which it was envoked')
+  });
+
+
+});
+
+
+ //  context('should start and end', function(){
+ //   it('should be a function', function() {
+ //     assert.isFunction(Timer);
+ //   });
+ //
+ //   it('should return null if there is not a given start time', function() {
+ //     var returned = timer.end();
+ //     assert.isNull(returned);
+ //   });
+ //
+ //   it('should have a start time equal to date.now', function() {
+ //     var start = timer.start();
+ //     var expected = Date.now();
+ //     assert.equal(start, expected);
+ //   });
+ //
+ //   it('should return the end time if given a start time', function(){
+ //     timer.start();
+ //     var end = timer.end();
+ //     var expected = Date.now() + timer.duration;
+ //     assert.equal(end, expected);
+ //   });
+ // });
+
 
 //
 // //write unit tests for the timer itself
