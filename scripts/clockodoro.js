@@ -1,8 +1,8 @@
-const render = require('./render');
+const renderTimer = require('./render-timer');
 const Timer = require('./timer');
 const { $workInput, $breakInput } = require('./_selectors');
 
-const Clockodoro = {
+  const Clockodoro = {
   workDuration: $workInput.val() || 25,
   breakDuration: $breakInput.val() || 5,
   timers: [],
@@ -12,54 +12,63 @@ const Clockodoro = {
 
   generateNewTimer: function() {
     if (!this.timer) {
-      return this.timers.unshift(new Timer(this.intervalDuration, 'work'));
+      this._generateWorkTimer();
+    }
+    if(this.timer) {
+
     }
 
-    const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.intervalDuration;
-    const nextStatus = this.timer.isWorkTimer ? 'break' : 'work';
-    this.timers.unshift(new Timer(this.intervalDuration, nextStatus));
+    const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.workDuration;
+    const nextStatus = this.timer.isWorkTimer ? 'break' : 'work'; 
   },
 
   _generateWorkTimer: function () {
-
+    let workTimer = new Timer(this.workDuration, 'work');
+    this._addToTimers(workTimer);
   },
 
   _generateBreakTimer: function () {
-
+    let newBreakTimer = new Timer(this.breakDuration, 'break');
+    this._addToTimers(newBreakTimer);
   },
 
   _generateLongBreakTimer: function () {
-
+    let longBreakTimer = new Timer(this.breakDuration * 3, 'break');
+    this._addToTimers(longBreakTimer);
   },
+
+  _addToTimers: function (timer) {
+    this.timers.unshift(timer)
+  }
 
   startTimer() {
     this.timer.state = 'running';
-    this.timer.tick();
+    this.timer.generateStartTime();
+    this._tick();
   },
 
-  tick() {
-    render(this.timer);
+  _tick() {
+    renderTimer(this.timer);
     if(!this.timer.isElapsed) {
-      setTimeout(this.tick.bind(this), 60);
+      setTimeout(this._tick.bind(this), 60);
     } else {
       this.generateNewTimer();
     }
   },
 
-  pauseTimer() {
-    this.timer.state = 'paused';
-    let pausedRemaining = this.timer.remainingTime;
-    let paused = setTimeout(this.timer.tick);
-    clearTimeout(paused);
-  },
-
-  resumeTimer() {
-    this.timer.startTime = this.pausedRemaining;
-    this.startTimer();
-  },
-
-  extendTimer() {
-  },
+  // pauseTimer() {
+  //   this.timer.state = 'paused';
+  //   let pausedRemaining = this.timer.remainingTime;
+  //   clearTimeout(this.tickTimeout);
+  // },
+  //
+  // resumeTimer() {
+  //   this.timer.startTime = this.pausedRemaining;
+  //   this.startTimer();
+  // },
+  //
+  // extendTimer() {
+  // },
 };
 
 module.exports = Clockodoro;
