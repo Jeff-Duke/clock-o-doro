@@ -3,7 +3,7 @@ const Timer = require('../scripts/timer');
 const Clockodoro = require('../scripts/clockodoro');
 
 describe('Clockodoro object', function() {
-  Clockodoro.generateNewTimer();
+  // Clockodoro.generateNewTimer();
 
   beforeEach(function() {
     this.rightNow = Date.now();
@@ -17,13 +17,16 @@ describe('Clockodoro object', function() {
 
     context('clockodoro methods', function() {
 
-    it('should have the end time extended by 3 minutes if extend is called', function() {
+    it.skip('should have the end time extended by 3 minutes if extend is called', function() {
       let originalEnd = Clockodoro.timer.endTime;
       Clockodoro.timer.extend();
       assert.equal(Clockodoro.timer.endTime = originalEnd + 180000);
     });
 
-    it.skip('should have a state of running when started', function() {
+    it('should have a state of running when started', function() {
+      Clockodoro.intervalDuration = 25;
+      Clockodoro.breakDuration = 5;
+      Clockodoro.generateNewTimer();
       Clockodoro.startTimer();
       assert.equal(Clockodoro.timer.state, 'running');
     });

@@ -26,7 +26,7 @@ class Timer {
 
   get remainingTime() {
     if(!this.startTime) {return null;}
-    if(this.startTime) {return this.endTime - Date.now(); }
+    if( this.startTime) {return this.endTime - Date.now(); }
   }
 
   get isElapsed() {
