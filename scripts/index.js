@@ -1,4 +1,4 @@
 require('./timer');
 require('./clockodoro');
-require('./render');
+require('./render-timer');
 require('./jquery');

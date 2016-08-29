@@ -1,8 +1,8 @@
 var $ = require('./jquery');
 
-var _globals = {
+var _selectors = {
   $: require('./jquery'),
-  $intervalInput: $('#interval-input'),
+  $workInput: $('#work-input'),
   $breakInput: $('#break-input'),
   $startButton: $('#start-button'),
   $pauseButton: $('#pause-button'),
@@ -11,4 +11,4 @@ var _globals = {
   $timerDisplay: $('#timer-display')
 };
 
-module.exports = _globals;
+module.exports = _selectors;
