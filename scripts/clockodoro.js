@@ -1,30 +1,36 @@
 const render = require('./render');
 const Timer = require('./timer');
-const _globals = require('./_globals');
+const { $intervalInput, $breakInput } = require('./_globals');
 
 const Clockodoro = {
-  workSessions: 0,
-  breakSessions: 0,
-  intervalDuration: _globals.$intervalInput.val() || 25,
-  breakDuration: _globals.$breakInput.val() || 5,
-  timer: null,
+  get workSessions() { return this.timers.filter(t => t.isWorkTimer).length },
+  get breakSessions() { return this.timers.filter(t => t.isBreakTimer).length },
+  intervalDuration: $intervalInput.val() || 25,
+  breakDuration: $breakInput.val() || 5,
+  timers: [],
+  get timer() { return this.timers[0]; },
 
   generateNewTimer: function() {
+    if (!this.timer) {
+      return this.timers.unshift(new Timer(this.intervalDuration, 'work'))
+    }
 
-    if (this.workSessions === this.breakSessions) {
-      this.timer = new Timer(this.intervalDuration);
-      this.workSessions += 1;
-    }
-    else if (this.workSessions > this.breakSessions && this.breakSessions % 4 !== 0) {
-      this.timer = new Timer(this.breakDuration);
-      this.breakSessions += 1;
-    }
-    else if (this.workSessions > this.breakSessions && this.breakSessions % 4 === 0) {
-      this.timer = new Timer(this.breakDuration * 3);
-      this.breakSessions += 1;
-    }
-    return this.timer;
+    const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.intervalDuration;
+    const nextStatus = this.timer.isWorkTimer ? 'break' : 'work';
+    this.timers.unshift(new Timer(this.intervalDuration, nextStatus));
   },
+
+  _generateWorkTimer: function () {
+
+  },
+
+  _generateBreakTimer: function () {
+
+  },
+
+  _generateLongBreakTimer: function () {
+
+  }
 
   startTimer() {
     this.timer.state = 'running';
@@ -32,13 +38,11 @@ const Clockodoro = {
   },
 
   tick() {
-    if(!this.timer.isElapsed) {
-    setTimeout(this.tick.bind(this), 60);
     render(this.timer);
-    }
-    if(this.timer.isElapsed) {
-      render(this.timer);
-      return;
+    if(!this.timer.isElapsed) {
+      setTimeout(this.tick.bind(this), 60);
+    } else {
+      this.generateNewTimer();
     }
   },
 
