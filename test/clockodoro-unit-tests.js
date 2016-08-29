@@ -5,10 +5,14 @@ const Clockodoro = require('../scripts/clockodoro');
 describe('Clockodoro object', function() {
   // Clockodoro.generateNewTimer();
 
+  let tickCount = 0;
+
   beforeEach(function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
     Date.now = () => this.rightNow;
+    const tick = Clockodoro.tick;
+    Clockodoro.tick = () => { tickCount++; tick(); }
   });
 
   afterEach(function() {
