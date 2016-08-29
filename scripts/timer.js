@@ -10,7 +10,7 @@ class Timer {
   }
 
   get isBreakTimer() {
-    return this.type === 'break';
+    return this.type === 'break'
   }
 
   generateStartTime(time = Date.now()) {
