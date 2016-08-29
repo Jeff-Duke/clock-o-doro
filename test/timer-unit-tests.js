@@ -8,7 +8,6 @@ describe('Timer', function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
     Date.now = () => this.rightNow;
-    debugger;
   });
 
   afterEach(function() {
@@ -71,7 +70,8 @@ describe('Timer', function() {
     });
 
     it('should be elapsed once the duration is complete', function() {
-      Date.now = () => this.rightNow + timer.duration;
+      Date.now = () => timer.endTime;
+
       assert.equal(timer.isElapsed, true);
     });
   });

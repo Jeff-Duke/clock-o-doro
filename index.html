@@ -10,11 +10,13 @@
         <input type="number" id="work-input" value="25" placeholder="work interval duration">
         <input type="number" id="break-input" value="5" placeholder="break interval duration">
         <input type="button" id="start-button" value="Start">
-        <input type="button" id="pause-button" value="Pause">
-        <input type="button" id="resume-button" value="Resume">
-        <input type="button" id="reset-button" value="Reset">
+        <input type="button" id="pause-button" value="Pause" hidden>
+        <input type="button" id="resume-button" value="Resume"hidden>
+        <input type="button" id="reset-button" value="Reset"hidden>
       </article>
-      <article id="timer-display"></article>
+      <article id="timer-display">
+        <p class="timer-display">25:00</p>
+    </article>
     </section>
 
     <script src="/main.bundle.js"></script>
