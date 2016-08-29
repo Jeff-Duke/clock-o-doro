@@ -3,6 +3,7 @@ class Timer {
     this.duration = minutes * 60000;
     this.startTime = null;
     this.state = null;
+    this.type = type;
   }
 
   get isWorkTimer() {
@@ -10,7 +11,7 @@ class Timer {
   }
 
   get isBreakTimer() {
-    return this.type === 'break'
+    return this.type === 'break';
   }
 
   generateStartTime(time = Date.now()) {
@@ -23,13 +24,11 @@ class Timer {
   }
 
   get elapsedTime() {
-    if(!this.startTime) {return null;}
-    if( this.startTime) {return Date.now() - this.startTime; }
+    return this.startTime ? Date.now() - this.startTime : null;
   }
 
   get remainingTime() {
-    if(!this.startTime) {return null;}
-    if( this.startTime) {return this.endTime - Date.now(); }
+    return this.startTime ? this.endTime - Date.now() : null;
   }
 
   get isElapsed() {

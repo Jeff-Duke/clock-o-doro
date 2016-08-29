@@ -1,18 +1,18 @@
 const render = require('./render');
 const Timer = require('./timer');
-const { $intervalInput, $breakInput } = require('./_globals');
+const { $workInput, $breakInput } = require('./_selectors');
 
 const Clockodoro = {
-  get workSessions() { return this.timers.filter(t => t.isWorkTimer).length },
-  get breakSessions() { return this.timers.filter(t => t.isBreakTimer).length },
-  intervalDuration: $intervalInput.val() || 25,
+  workDuration: $workInput.val() || 25,
   breakDuration: $breakInput.val() || 5,
   timers: [],
+  get workSessions() { return this.timers.filter(t => t.isWorkTimer).length; },
+  get breakSessions() { return this.timers.filter(t => t.isBreakTimer).length; },
   get timer() { return this.timers[0]; },
 
   generateNewTimer: function() {
     if (!this.timer) {
-      return this.timers.unshift(new Timer(this.intervalDuration, 'work'))
+      return this.timers.unshift(new Timer(this.intervalDuration, 'work'));
     }
 
     const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.intervalDuration;
@@ -30,7 +30,7 @@ const Clockodoro = {
 
   _generateLongBreakTimer: function () {
 
-  }
+  },
 
   startTimer() {
     this.timer.state = 'running';
@@ -54,7 +54,8 @@ const Clockodoro = {
   },
 
   resumeTimer() {
-    let timer = new Timer(pausedRemaining);
+    this.timer.startTime = this.pausedRemaining;
+    this.startTimer();
   },
 
   extendTimer() {

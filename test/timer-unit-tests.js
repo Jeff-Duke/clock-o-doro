@@ -4,11 +4,11 @@ const Timer = require('../scripts/timer');
 describe('Timer', function() {
   let timer = new Timer();
 
-
   beforeEach(function() {
     this.rightNow = Date.now();
     this.dateNow = Date.now;
     Date.now = () => this.rightNow;
+    debugger;
   });
 
   afterEach(function() {
