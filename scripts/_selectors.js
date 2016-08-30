@@ -5,8 +5,8 @@ var _selectors = {
   $workInput: $('#work-input'),
   $breakInput: $('#break-input'),
   $startButton: $('#start-button'),
-  $pauseButton: $('#pause-button'),
-  $resumeButton: $('#resume-button'),
+  $setWorkButton: $('#set-work-duration-button'),
+  $setBreakButton: $('#set-break-duration-button'),
   $resetButton: $('#reset-button'),
   $timerDisplay: $('#timer-display')
 };

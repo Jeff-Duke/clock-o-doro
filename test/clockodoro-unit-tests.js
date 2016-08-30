@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const Clockodoro = require('../scripts/clockodoro');
+const {$, $breakInput, $workInput} = require('../scripts/_selectors');
 
 describe('Clockodoro object', function() {
 
@@ -72,12 +73,36 @@ describe('Clockodoro object', function() {
 
       it('should be able to start the 2nd timer', function() {
         Clockodoro.generateNewTimer();
-        Date.now = () => Clockodoro.timer.endTime;
+        this.rightNow += Clockodoro.timer.duration;
         assert.equal(Clockodoro.timer.isElapsed, true);
+        assert.equal(Clockodoro.timers.length, 2);
         Clockodoro.startTimer();
-        assert.equal(Clockodoro.timers.length, 3);
-        debugger;
         assert.equal(Clockodoro.timer.isElapsed, false);
+        assert.equal(Clockodoro.timer.state, 'running');
+      });
+
+    });
+    context('setWorkDuration and setBreakDuration methods', function() {
+      beforeEach(function() {
+        Clockodoro.generateNewTimer();
+      });
+
+      it('should update the work-duration if setWorkDuration is called', function() {
+        $workInput.val(60);
+        Clockodoro.setWorkDuration();
+        assert.equal(Clockodoro.workDuration, 60);
+      });
+
+      it.skip('should throw out the current timer if it is a work timer, and the timer is not running, and create a new work timer with the defined work duration value if setWorkDuration is called', function() {
+
+      });
+
+      it.skip('should update the break-duration if setBreakDuration is called', function() {
+
+      });
+
+      it.skip('should throw out the current timer if it is a break timer, is not running, and create a new break timer with the defined break duration value if setBreakDuration is called', function() {
+
       });
 
     });
