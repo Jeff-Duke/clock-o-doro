@@ -1,5 +1,4 @@
 var $ = require('./jquery');
-const renderTimer = require('./render-timer');
 const Timer = require('./timer');
 const { $workInput, $breakInput, $timerDisplay } = require('./_selectors');
 
