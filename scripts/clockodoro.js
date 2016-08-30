@@ -1,8 +1,8 @@
 const Timer = require('./timer');
 const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
 
-  const Clockodoro = {
-  workDuration: $workInput.val() || 0.5,
+const Clockodoro = {
+  workDuration: $workInput.val() || 25,
   breakDuration: $breakInput.val() || 5,
   timers: [],
   get workSessions() { return this.timers.filter(t => t.isWorkTimer).length; },
@@ -22,8 +22,8 @@ const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
   _generateBreakTimer: function() {
     if(this.breakSessions % 4 === 0 && this.breakSessions > 1) { this._generateLongBreakTimer(); }
     else{
-    let newBreakTimer = new Timer(this.breakDuration, 'break');
-    this._addToTimers(newBreakTimer);
+    let shortBreakTimer = new Timer(this.breakDuration, 'break');
+    this._addToTimers(shortBreakTimer);
     }
   },
 
@@ -42,15 +42,13 @@ const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
     this._tick();
   },
 
-  renderTimer() {
-    return (this.timer.isWorkTimer) ? this._renderWorkTimer() : this._renderBreakTimer();
+  _tick() {
+    this.renderTimer();
+    return this.timer.isElapsed ? this.generateNewTimer() : setTimeout(this._tick.bind(this), 50);
   },
 
-  renderInitialTimer() {
-    $timerDisplay.html('');
-    return $timerDisplay.append($(`
-      <p class="base-timer-display">${this.timer.duration}</p>
-      `));
+  renderTimer() {
+    return (this.timer.isWorkTimer) ? this._renderWorkTimer() : this._renderBreakTimer();
   },
 
   _renderWorkTimer() {
@@ -63,14 +61,21 @@ const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
   _renderBreakTimer() {
     $timerDisplay.html('');
     return $timerDisplay.append($(`
-      <p class="break-timer-display">${this.timer.remainingTimer}</p>
+      <p class="break-timer-display">${this.timer.remainingTime}</p>
       `));
   },
 
-  _tick() {
-    this.renderTimer();
-    return this.timer.isElapsed ? this.generateNewTimer() : setTimeout(this._tick.bind(this), 50);
+  renderInitialTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="base-timer-display">${this.timer.duration}</p>
+      `));
   },
+
+  setWorkDuration(minutes) {
+    this.workDuration = minutes;
+  },
+
 };
 
 module.exports = Clockodoro;

@@ -4,18 +4,23 @@
     <meta charset="utf-8">
     <title>ClockODoro</title>
   </head>
+  
   <body>
     <section class="timer-container">
       <article class="pomodoro" id="clock-o-doro">
-        <input type="number" id="work-input" value="0.5" placeholder="work interval duration">
-        <input type="number" id="break-input" value="5" placeholder="break interval duration">
+
+        <article class="settings">
+          <input type="number" id="work-input" value="0.5" placeholder="work interval duration">
+          <input type="button" id="set-work-duration-button" value="Set Work Duration">
+          <input type="number" id="break-input" value="5" placeholder="break interval duration">
+          <input type="button" id="set-break-button" value="Set Break Duration">
+        </article>
+
         <input type="button" id="start-button" value="Start">
-        <input type="button" id="pause-button" value="Pause" hidden>
-        <input type="button" id="resume-button" value="Resume"hidden>
         <input type="button" id="reset-button" value="Reset"hidden>
       </article>
       <article id="timer-display">
-        
+
     </article>
     </section>
 
