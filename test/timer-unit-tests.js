@@ -71,7 +71,6 @@ describe('Timer', function() {
 
     it('should be elapsed once the duration is complete', function() {
       Date.now = () => timer.endTime;
-
       assert.equal(timer.isElapsed, true);
     });
   });

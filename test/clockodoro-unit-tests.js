@@ -37,7 +37,12 @@ describe('Clockodoro object', function() {
       });
 
       it('should create a long break timer if the most recent timer was a work timer AND the last 3 break timers were short breaks', function() {
-        while (Clockodoro.timers.length < 8) { Clockodoro.generateNewTimer(); }
+        while (Clockodoro.timers.length < 10) { Clockodoro.generateNewTimer(); }
+        assert.equal(Clockodoro.timer.duration, Clockodoro.breakDuration * 60000 * 3);
+      });
+
+      it('should create another long break timer after 2 cycles', function() {
+        while (Clockodoro.timers.length < 18) { Clockodoro.generateNewTimer(); }
         assert.equal(Clockodoro.timer.duration, Clockodoro.breakDuration * 60000 * 3);
       });
 
@@ -64,6 +69,17 @@ describe('Clockodoro object', function() {
       it('should generate a remaining time on the timer when the startTimer method is called', function() {
         assert.equal(Clockodoro.timer.remainingTime, Clockodoro.timer.endTime - Date.now());
       });
+
+      it('should be able to start the 2nd timer', function() {
+        Clockodoro.generateNewTimer();
+        Date.now = () => Clockodoro.timer.endTime;
+        assert.equal(Clockodoro.timer.isElapsed, true);
+        Clockodoro.startTimer();
+        assert.equal(Clockodoro.timers.length, 3);
+        debugger;
+        assert.equal(Clockodoro.timer.isElapsed, false);
+      });
+
     });
   });
 });
