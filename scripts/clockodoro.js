@@ -11,18 +11,8 @@ const { $workInput, $breakInput, $timerDisplay } = require('./_selectors');
   get timer() { return this.timers[0]; },
 
   generateNewTimer: function() {
-    if (!this.timer) {
-      this._generateWorkTimer();
-    }
-    else if(this.timer.type === 'work') {
-      this._generateBreakTimer();
-    }
-    else{
-      this._generateWorkTimer();
-    }
-    //
-    // const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.workDuration;
-    // const nextStatus = this.timer.isWorkTimer ? 'break' : 'work';
+    if (this.timer && this.timer.type=== 'work') { this._generateBreakTimer(); }
+    else { this._generateWorkTimer(); }
   },
 
   _generateWorkTimer: function() {
@@ -77,21 +67,6 @@ const { $workInput, $breakInput, $timerDisplay } = require('./_selectors');
       this.generateNewTimer();
     }
   },
-
-  // pauseTimer() {
-  //   this.timer.state = 'paused';
-  //   let pausedRemaining = this.timer.remainingTime;
-  //   clearTimeout(this.tickTimeout);
-  // },
-  //
-  // resumeTimer() {
-  //   this.timer.startTime = this.pausedRemaining;
-  //   this.startTimer();
-  // },
-  //
-  // extendTimer() {
-  // },
-
 };
 
 module.exports = Clockodoro;
