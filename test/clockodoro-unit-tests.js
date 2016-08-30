@@ -40,14 +40,29 @@ describe('Clockodoro object', function() {
         while (Clockodoro.timers.length < 8) { Clockodoro.generateNewTimer(); }
         assert.equal(Clockodoro.timer.duration, Clockodoro.breakDuration * 60000 * 3);
       });
-      
+
     });
 
     context('startTimer method', function() {
-      it('should have a state of running when started', function() {
+      beforeEach(function() {
         Clockodoro.generateNewTimer();
         Clockodoro.startTimer();
+      });
+
+      it('should have a state of running when started', function() {
         assert.equal(Clockodoro.timer.state, 'running');
+      });
+
+      it('should generate a start time on the timer when the startTimer method is called', function() {
+        assert.equal(Clockodoro.timer.startTime, Date.now());
+      });
+
+      it('should generate an end time on the timer when the startTimer method is called', function() {
+        assert.equal(Clockodoro.timer.endTime, Date.now() + Clockodoro.timer.duration);
+      });
+
+      it('should generate a remaining time on the timer when the startTimer method is called', function() {
+        assert.equal(Clockodoro.timer.remainingTime, Clockodoro.timer.endTime - Date.now());
       });
     });
   });

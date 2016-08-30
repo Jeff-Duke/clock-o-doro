@@ -1,6 +1,7 @@
+var $ = require('./jquery');
 const renderTimer = require('./render-timer');
 const Timer = require('./timer');
-const { $workInput, $breakInput } = require('./_selectors');
+const { $workInput, $breakInput, $timerDisplay } = require('./_selectors');
 
   const Clockodoro = {
   workDuration: $workInput.val() || 25,
@@ -20,17 +21,17 @@ const { $workInput, $breakInput } = require('./_selectors');
     else{
       this._generateWorkTimer();
     }
-
-    const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.workDuration;
-    const nextStatus = this.timer.isWorkTimer ? 'break' : 'work';
+    //
+    // const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.workDuration;
+    // const nextStatus = this.timer.isWorkTimer ? 'break' : 'work';
   },
 
-  _generateWorkTimer: function () {
+  _generateWorkTimer: function() {
     let workTimer = new Timer(this.workDuration, 'work');
     this._addToTimers(workTimer);
   },
 
-  _generateBreakTimer: function () {
+  _generateBreakTimer: function() {
     if(this.breakSessions % 3 === 0 && this.breakSessions > 1) { this._generateLongBreakTimer(); }
     else{
     let newBreakTimer = new Timer(this.breakDuration, 'break');
@@ -38,12 +39,12 @@ const { $workInput, $breakInput } = require('./_selectors');
     }
   },
 
-  _generateLongBreakTimer: function () {
+  _generateLongBreakTimer: function() {
     let longBreakTimer = new Timer(this.breakDuration * 3, 'break');
     this._addToTimers(longBreakTimer);
   },
 
-  _addToTimers: function (timer) {
+  _addToTimers: function(timer) {
     this.timers.unshift(timer);
   },
 
@@ -53,8 +54,24 @@ const { $workInput, $breakInput } = require('./_selectors');
     this._tick();
   },
 
+  renderWorkTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="work-timer-display">${this.timer.remainingTime}</p>
+      `));
+  },
+
+  renderBreakTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="break-timer-display">${this.timer.remainingTimer}</p>
+      `));
+  },
+
   _tick() {
-    renderTimer(this.timer);
+    if (this.timer.type === 'work') { this.renderWorkTimer(); }
+    if (this.timer.type === 'break') { this.renderBreakTimer(); }
+
     if(!this.timer.isElapsed) {
       setTimeout(this._tick.bind(this), 60);
     } else {
