@@ -3,7 +3,7 @@ const Clockodoro = require ('./clockodoro');
 
 $(document).ready(function() {
   Clockodoro.generateNewTimer();
-  Clockodoro.renderInitialTimer();
+  Clockodoro.renderTimerInitially();
 });
 
 $startButton.on('click', function() {
@@ -16,4 +16,8 @@ $setWorkButton.on('click', function() {
 
 $setBreakButton.on('click', function() {
   Clockodoro.setBreakDuration($breakInput.val());
+});
+
+$('#sound-button').on('click', function() {
+  Clockodoro.playSound();
 });

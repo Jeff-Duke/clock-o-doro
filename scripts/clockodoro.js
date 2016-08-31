@@ -1,5 +1,6 @@
 const Timer = require('./timer');
 const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
+const moment = require ('moment');
 
 const Clockodoro = {
   workDuration: $workInput.val() || 25,
@@ -44,54 +45,76 @@ const Clockodoro = {
 
   _tick() {
     this.renderTimer();
-    return this.timer.isElapsed ? this.generateNewTimer() : setTimeout(this._tick.bind(this), 50);
+    if(this.timer.isElapsed) {
+      this.generateNewTimer();
+      this.renderTimerInitially();
+    }
+    else {
+      setTimeout(this._tick.bind(this), 50);
+      if (Math.floor(this.timer.remainingTime) < 21000 && Math.floor(this.remainingTime) % 5000 === 0) {
+        this.playSound();
+        console.log('sound!');
+      }
+    }
+  },
+
+  playSound() {
+    const beep = new Audio('../sounds/beep.wav');
+    beep.play();
   },
 
   renderTimer() {
-    return (this.timer.isWorkTimer) ? this._renderWorkTimer() : this._renderBreakTimer();
+    let seconds = this.timer.remainingTime / 1000;
+    let ss = Math.floor(seconds % 60);
+    let mm = Math.floor(seconds / 60) % 60;
+    let hh = Math.floor(seconds / 3600) % 100;
+    return this.timer.isWorkTimer ? this._renderWorkTimer(hh,mm,ss) : this._renderBreakTimer();
   },
 
-  _renderWorkTimer() {
+  _renderWorkTimer(hh,mm,ss) {
     $timerDisplay.html('');
     return $timerDisplay.append($(`
-      <p class="work-timer-display">${this.timer.remainingTime}</p>
+      <p class="work-timer-display">${(hh < 10 ? "0" + hh : hh) + ":" + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
       `));
   },
 
-  _renderBreakTimer() {
+  _renderBreakTimer(hh,mm,ss) {
     $timerDisplay.html('');
     return $timerDisplay.append($(`
-      <p class="break-timer-display">${this.timer.remainingTime}</p>
+      <p class="break-timer-display">${(hh < 10 ? "0" + hh : hh) + ":" + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
       `));
   },
 
-  renderInitialTimer() {
+  renderTimerInitially() {
     $timerDisplay.html('');
+    let seconds = this.timer.duration / 1000;
+    let ss = Math.floor(seconds % 60);
+    let mm = Math.floor(seconds / 60) % 60;
+    let hh = Math.floor(seconds / 3600) % 100;
     return $timerDisplay.append($(`
-      <p class="base-timer-display">${this.timer.duration}</p>
+      <p class="base-timer-display">${(hh < 10 ? "0" + hh : hh) + ":" + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
       `));
   },
 
   setWorkDuration(minutes) {
     this.workDuration = minutes;
+
     if(this.timer && this.timer.isWorkTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderInitialTimer();
-    }
-    else {
-      return;
+      this.renderTimerInitially();
     }
   },
 
   setBreakDuration(minutes) {
     this.breakDuration = minutes;
+
     if(this.timer.isBreakTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderInitialTimer();
+      this.renderTimerInitially();
     }
-  }
+  },
 
 };
 
