@@ -3,28 +3,28 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/styles.scss">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ClockODoro</title>
   </head>
-  
-  <body>
-    <section class="timer-container">
-      <article class="pomodoro" id="clock-o-doro">
 
+  <body>
+    <section id="timer-container">
+      <article class="timer-container" id="clock-o-doro">
         <article class="settings">
           <input type="number" id="work-input" value="0.5" placeholder="work interval duration">
-          <input type="button" id="set-work-duration-button" value="Set Work Duration">
+          <input type="button" id="set-work-duration-button" value="Set Work Time">
           <input type="number" id="break-input" value="5" placeholder="break interval duration">
-          <input type="button" id="set-break-button" value="Set Break Duration">
+          <input type="button" id="set-break-button" value="Set Break Time">
         </article>
-
+      </article>
+      <section class="start-btn">
         <input type="button" id="start-button" value="Start">
         <input type="button" id="reset-button" value="Reset"hidden>
-      </article>
-      <article id="timer-display">
+      </section>
 
-    </article>
+
+      <article id="timer-display">25:00</article>
     </section>
-
     <script src="/main.bundle.js"></script>
   </body>
 </html>
