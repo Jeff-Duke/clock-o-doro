@@ -3,7 +3,7 @@ const Clockodoro = require ('./clockodoro');
 
 $(document).ready(function() {
   Clockodoro.generateNewTimer();
-  Clockodoro.renderInitialTimer();
+  Clockodoro.renderTimerInitially();
 });
 
 $startButton.on('click', function() {

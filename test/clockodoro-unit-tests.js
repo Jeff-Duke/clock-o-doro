@@ -1,6 +1,5 @@
 const assert = require('chai').assert;
 const Clockodoro = require('../scripts/clockodoro');
-const {$, $breakInput, $workInput} = require('../scripts/_selectors');
 
 describe('Clockodoro object', function() {
 
@@ -116,7 +115,6 @@ describe('Clockodoro object', function() {
         assert.equal(Clockodoro.timers.length, 2);
         assert.equal(Clockodoro.breakDuration, 10);
         assert.equal(Clockodoro.timer.duration, 10 * 60000);
-
       });
 
     });
