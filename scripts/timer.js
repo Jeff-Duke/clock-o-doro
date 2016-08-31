@@ -1,17 +1,12 @@
+const _globals = require('./_globals');
+const render = require('./render');
+
 class Timer {
-  constructor(minutes = 25, type = 'work') {
-    this.duration = minutes * 60000;
+  constructor(inputTime) {
+    this.duration = inputTime || 25;
+    this.duration = this.duration * 60000;
     this.startTime = null;
     this.state = null;
-    this.type = type;
-  }
-
-  get isWorkTimer() {
-    return this.type === 'work';
-  }
-
-  get isBreakTimer() {
-    return this.type === 'break';
   }
 
   generateStartTime(time = Date.now()) {
@@ -20,15 +15,18 @@ class Timer {
   }
 
   get endTime() {
-    return this.startTime ?  this.startTime + this.duration : null;
+    if(!this.startTime) {return null;}
+    if( this.startTime) {return this.startTime + this.duration;}
   }
 
   get elapsedTime() {
-    return this.startTime ? Date.now() - this.startTime : null;
+    if(!this.startTime) {return null;}
+    if( this.startTime) {return Date.now() - this.startTime; }
   }
 
   get remainingTime() {
-    return this.startTime ? this.endTime - Date.now() : null;
+    if(!this.startTime) {return null;}
+    if(this.startTime) {return this.endTime - Date.now(); }
   }
 
   get isElapsed() {

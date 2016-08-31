@@ -1,8 +1,97 @@
-
-body {
-  font-family: 'Orbitron', sans-serif;
+html {
+  background: url(../images/calm.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-.timer-container {
-  background-color: lightblue;
+body {
+  font-family: sans-serif;
+  margin: 10px;
+}
+
+.pomodoro {
+  height: 500px;
+  /*display: flex;*/
+  flex-direction: row;
+  /*justify-content: flex-start;*/
+}
+
+
+.pomodoro, #timer-display {
+  /*flex: center;*/
+  height: 100px;
+  margin: auto;
+  margin-top: 20px;
+  width: 100px;
+}
+
+#work-input, #break-input {
+  border: 3px solid white;
+  background-color: #A6A6A6;
+  border-radius: 7px;
+  font-size: 30px;
+  margin: 10px;
+  width: 95px;
+  margin: auto;
+  display: inline-block;
+}
+
+#work-input {
+  order: 1;
+}
+
+#break-input {
+  margin-top: 10px;
+  order: 2;
+}
+
+#start-button {
+  border: 3px solid #594987;
+  border-radius: 7px;
+  font-size: 30px;
+  margin-top: 10px;
+  width: 95px;
+}
+
+.timer-display {
+  color: white;
+  font-size: 200px;
+  height: 50%;
+  left: 50%;
+  margin: 0 auto;
+  padding-right: 150px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+}
+
+@media screen and (max-width : 760px){
+
+  html {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+	.clock-face {
+		position: static;
+		display: none;
+    margin-bottom: 1px;
+    display:block;
+    width: 100%;
+	}
+
+  .timer-display {
+    font-size: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 50%;
+  }
 }
