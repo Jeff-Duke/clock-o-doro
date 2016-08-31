@@ -1,71 +1,85 @@
-html {
+
+body {
   background: url(../images/calm.jpeg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-body {
   font-family: sans-serif;
-  margin: 10px;
+  height: 100%;
 }
 
-.pomodoro {
-  height: 500px;
-  /*display: flex;*/
-  flex-direction: row;
-  /*justify-content: flex-start;*/
+.settings {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  opacity: 0.6;
 }
 
-
-.pomodoro, #timer-display {
-  /*flex: center;*/
+.timer-container {
   height: 100px;
   margin: auto;
   margin-top: 20px;
-  width: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 #work-input, #break-input {
+  text-align: center;
   border: 3px solid white;
   background-color: #A6A6A6;
   border-radius: 7px;
   font-size: 30px;
   margin: 10px;
-  width: 95px;
-  margin: auto;
-  display: inline-block;
+  width: 20%;
 }
 
-#work-input {
-  order: 1;
-}
-
-#break-input {
-  margin-top: 10px;
-  order: 2;
-}
-
-#start-button {
+#set-work-duration-button, #set-break-button {
   border: 3px solid #594987;
   border-radius: 7px;
   font-size: 30px;
   margin-top: 10px;
-  width: 95px;
+  width: 50%;
+  padding: 1px 0px 30px 0px;
+  text-align: center;
 }
 
-.timer-display {
+#timer-display {
+  height: 100px;
+  margin: auto;
+  margin-top: 20px;
+  width: 100px;
   color: white;
   font-size: 200px;
   height: 50%;
   left: 50%;
   margin: 0 auto;
+  padding-top: 10%;
   padding-right: 150px;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
+}
+
+#start-button {
+  border: 3px solid #594987;
+  border-radius: 100%;
+  font-size: 30px;
+  height: 100px;
+  -moz-border-radius: 60%;
+  opacity: 0.6;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 80%;
+  -webkit-border-radius: 50%;
+  width: 100px;
+}
+
+.start-btn {
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width : 760px){
@@ -77,21 +91,30 @@ body {
     background-size: cover;
   }
 
-	.clock-face {
-		position: static;
-		display: none;
-    margin-bottom: 1px;
-    display:block;
-    width: 100%;
-	}
-
-  .timer-display {
+  #timer-display {
     font-size: 100px;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 60%;
+    padding-top: 30%;
     transform: translate(-50%, -50%);
     width: 40%;
     height: 50%;
+  }
+
+  #start-button {
+    left: 50%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+    -moz-border-radius: 50%;
+  	-webkit-border-radius: 50%;
+  	border-radius: 50%;
+    width: 150px;
+  	height: 150px;
+    opacity: 0.6;
+  }
+
+  #set-work-duration-button, #set-break-button {
+    width: 80%;
   }
 }
