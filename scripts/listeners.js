@@ -17,7 +17,3 @@ $setWorkButton.on('click', function() {
 $setBreakButton.on('click', function() {
   Clockodoro.setBreakDuration($breakInput.val());
 });
-
-$('#sound-button').on('click', function() {
-  Clockodoro.playSound();
-});
