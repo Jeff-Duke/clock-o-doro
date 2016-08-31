@@ -1,8 +1,7 @@
-const renderTimer = require('./render-timer');
 const Timer = require('./timer');
-const { $workInput, $breakInput } = require('./_selectors');
+const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
 
-  const Clockodoro = {
+const Clockodoro = {
   workDuration: $workInput.val() || 25,
   breakDuration: $breakInput.val() || 5,
   timers: [],
@@ -11,35 +10,31 @@ const { $workInput, $breakInput } = require('./_selectors');
   get timer() { return this.timers[0]; },
 
   generateNewTimer: function() {
-    if (!this.timer) {
-      this._generateWorkTimer();
-    }
-    if(this.timer) {
-
-    }
-
-    const nextDuration = this.timer.isWorkTimer ? this.breakDuration : this.workDuration;
-    const nextStatus = this.timer.isWorkTimer ? 'break' : 'work'; 
+    if (this.timer && this.timer.type === 'work') { this._generateBreakTimer(); }
+    else { this._generateWorkTimer(); }
   },
 
-  _generateWorkTimer: function () {
+  _generateWorkTimer: function() {
     let workTimer = new Timer(this.workDuration, 'work');
     this._addToTimers(workTimer);
   },
 
-  _generateBreakTimer: function () {
-    let newBreakTimer = new Timer(this.breakDuration, 'break');
-    this._addToTimers(newBreakTimer);
+  _generateBreakTimer: function() {
+    if(this.breakSessions % 4 === 0 && this.breakSessions > 1) { this._generateLongBreakTimer(); }
+    else{
+    let shortBreakTimer = new Timer(this.breakDuration, 'break');
+    this._addToTimers(shortBreakTimer);
+    }
   },
 
-  _generateLongBreakTimer: function () {
+  _generateLongBreakTimer: function() {
     let longBreakTimer = new Timer(this.breakDuration * 3, 'break');
     this._addToTimers(longBreakTimer);
   },
 
-  _addToTimers: function (timer) {
-    this.timers.unshift(timer)
-  }
+  _addToTimers: function(timer) {
+    this.timers.unshift(timer);
+  },
 
   startTimer() {
     this.timer.state = 'running';
@@ -48,27 +43,39 @@ const { $workInput, $breakInput } = require('./_selectors');
   },
 
   _tick() {
-    renderTimer(this.timer);
-    if(!this.timer.isElapsed) {
-      setTimeout(this._tick.bind(this), 60);
-    } else {
-      this.generateNewTimer();
-    }
+    this.renderTimer();
+    return this.timer.isElapsed ? this.generateNewTimer() : setTimeout(this._tick.bind(this), 50);
   },
 
-  // pauseTimer() {
-  //   this.timer.state = 'paused';
-  //   let pausedRemaining = this.timer.remainingTime;
-  //   clearTimeout(this.tickTimeout);
-  // },
-  //
-  // resumeTimer() {
-  //   this.timer.startTime = this.pausedRemaining;
-  //   this.startTimer();
-  // },
-  //
-  // extendTimer() {
-  // },
+  renderTimer() {
+    return (this.timer.isWorkTimer) ? this._renderWorkTimer() : this._renderBreakTimer();
+  },
+
+  _renderWorkTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="work-timer-display">${this.timer.remainingTime}</p>
+      `));
+  },
+
+  _renderBreakTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="break-timer-display">${this.timer.remainingTime}</p>
+      `));
+  },
+
+  renderInitialTimer() {
+    $timerDisplay.html('');
+    return $timerDisplay.append($(`
+      <p class="base-timer-display">${this.timer.duration}</p>
+      `));
+  },
+
+  setWorkDuration(minutes) {
+    this.workDuration = minutes;
+  },
+
 };
 
 module.exports = Clockodoro;
