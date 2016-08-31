@@ -44,11 +44,17 @@ const Clockodoro = {
 
   _tick() {
     this.renderTimer();
-    return this.timer.isElapsed ? this.generateNewTimer() : setTimeout(this._tick.bind(this), 50);
+    if(this.timer.isElapsed) {
+      this.generateNewTimer();
+      this.renderTimerInitially();
+    }
+    else {
+      setTimeout(this._tick.bind(this), 50);
+    }
   },
 
   renderTimer() {
-    return (this.timer.isWorkTimer) ? this._renderWorkTimer() : this._renderBreakTimer();
+    return this.timer.isWorkTimer ? this._renderWorkTimer() : this._renderBreakTimer();
   },
 
   _renderWorkTimer() {
@@ -65,7 +71,7 @@ const Clockodoro = {
       `));
   },
 
-  renderInitialTimer() {
+  renderTimerInitially() {
     $timerDisplay.html('');
     return $timerDisplay.append($(`
       <p class="base-timer-display">${this.timer.duration}</p>
@@ -74,24 +80,23 @@ const Clockodoro = {
 
   setWorkDuration(minutes) {
     this.workDuration = minutes;
+
     if(this.timer && this.timer.isWorkTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderInitialTimer();
-    }
-    else {
-      return;
+      this.renderTimerInitially();
     }
   },
 
   setBreakDuration(minutes) {
     this.breakDuration = minutes;
+
     if(this.timer.isBreakTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderInitialTimer();
+      this.renderTimerInitially();
     }
-  }
+  },
 
 };
 
