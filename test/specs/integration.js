@@ -47,8 +47,8 @@ describe('Clockodoro', function() {
         workDurationInput.setValue(10);
         browser.click('#set-work-duration-button');
 
-        let timerDisplay = browser.getText('#timer-display');
-        assert.equal(timerDisplay, '10:00');
+        let timerDisplay = browser.getValue('#timer-display');
+        assert.equal(timerDisplay.val, '10:00');
     });
 
     it.skip('should take a new break duration in the set break duration field, and change the timer when the set break duration button is clicked', function() {
