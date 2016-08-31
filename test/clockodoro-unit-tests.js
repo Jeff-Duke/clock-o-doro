@@ -86,22 +86,36 @@ describe('Clockodoro object', function() {
       beforeEach(function() {
         Clockodoro.generateNewTimer();
       });
+      afterEach(function() {
+        Clockodoro.timers = [];
+        Clockodoro.workDuration = 25;
+        Clockodoro.breakDuration = 5;
+      });
 
       it('should update the work-duration if setWorkDuration is called', function() {
-        $workInput.val(60);
-        Clockodoro.setWorkDuration();
+        Clockodoro.setWorkDuration(60);
         assert.equal(Clockodoro.workDuration, 60);
       });
 
-      it.skip('should throw out the current timer if it is a work timer, and the timer is not running, and create a new work timer with the defined work duration value if setWorkDuration is called', function() {
-
+      it('should throw out the current timer if it is a work timer, and the timer is not running, and create a new work timer with the defined work duration value if setWorkDuration is called', function() {
+        Clockodoro.setWorkDuration(60);
+        assert.equal(Clockodoro.timers.length, 1);
+        assert.equal(Clockodoro.timer.type, 'work');
+        assert.equal(Clockodoro.timer.duration, 60 * 60000);
       });
 
-      it.skip('should update the break-duration if setBreakDuration is called', function() {
-
+      it('should update the break-duration if setBreakDuration is called', function() {
+        Clockodoro.setBreakDuration(10);
+        assert.equal(Clockodoro.breakDuration, 10);
       });
 
-      it.skip('should throw out the current timer if it is a break timer, is not running, and create a new break timer with the defined break duration value if setBreakDuration is called', function() {
+      it('should throw out the current timer if it is a break timer, is not running, and create a new break timer with the defined break duration value if setBreakDuration is called', function() {
+        while(Clockodoro.timers.length < 2) { Clockodoro.generateNewTimer(); }
+        assert.equal(Clockodoro.timer.isBreakTimer, true);
+        Clockodoro.setBreakDuration(10);
+        assert.equal(Clockodoro.timers.length, 2);
+        assert.equal(Clockodoro.breakDuration, 10);
+        assert.equal(Clockodoro.timer.duration, 10 * 60000);
 
       });
 
