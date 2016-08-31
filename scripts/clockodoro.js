@@ -74,7 +74,24 @@ const Clockodoro = {
 
   setWorkDuration(minutes) {
     this.workDuration = minutes;
+    if(this.timer && this.timer.isWorkTimer) {
+      this.timers.splice([0],1);
+      this.generateNewTimer();
+      this.renderInitialTimer();
+    }
+    else {
+      return;
+    }
   },
+
+  setBreakDuration(minutes) {
+    this.breakDuration = minutes;
+    if(this.timer.isBreakTimer) {
+      this.timers.splice([0],1);
+      this.generateNewTimer();
+      this.renderInitialTimer();
+    }
+  }
 
 };
 

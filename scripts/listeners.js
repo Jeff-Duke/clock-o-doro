@@ -1,4 +1,4 @@
-const { $, $startButton, $setWorkButton, $setBreakButton } = require ('./_selectors');
+const { $, $startButton, $setWorkButton, $setBreakButton, $workInput, $breakInput } = require ('./_selectors');
 const Clockodoro = require ('./clockodoro');
 
 $(document).ready(function() {
@@ -11,9 +11,9 @@ $startButton.on('click', function() {
 });
 
 $setWorkButton.on('click', function() {
-  Clockodoro.setWorkDuration(minutes);
+  Clockodoro.setWorkDuration($workInput.val());
 });
 
 $setBreakButton.on('click', function() {
-  Clockodoro.setBreakDuration(minutes);
+  Clockodoro.setBreakDuration($breakInput.val());
 });
