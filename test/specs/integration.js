@@ -74,11 +74,14 @@ describe('Clockodoro', function() {
     });
 
     it('should start counting down when the start button is clicked', function() {
-      let startButton = browser.element('#start-button');
       let timerDisplay = browser.element('#timer-display');
 
       assert.equal(timerDisplay.getText(), '30:00');
-      browser.click(startButton);
+      browser.click('#start-button');
+      browser.waitForText('#timer-display', 2000);
+
+      browser.click('#start-button');
+      browser.waitForText('#timer-display', 2000);
       assert.equal(timerDisplay.getText(), '29:59');
     });
 
