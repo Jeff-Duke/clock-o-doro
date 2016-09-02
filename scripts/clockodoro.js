@@ -1,5 +1,6 @@
 const Timer = require('./timer');
-const { $, $workInput, $breakInput, $timerDisplay } = require('./_selectors');
+const { $workInput, $breakInput, } = require('./_selectors');
+const {renderTimer, renderTimerInitially } = require('./render-timer');
 
 const Clockodoro = {
   workDuration: $workInput.val() || 25,
@@ -47,10 +48,10 @@ const Clockodoro = {
   },
 
   _tick() {
-    this.renderTimer();
+    renderTimer(this.timer);
     if(this.timer.isElapsed) {
       this.generateNewTimer();
-      this.renderTimerInitially();
+      renderTimerInitially(this.timer);
     }
     else {
       setTimeout(this._tick.bind(this), 50);
@@ -71,45 +72,8 @@ const Clockodoro = {
   },
 
   _resetSound() {
-    console.log('sound reset!');
     this.soundHasPlayed = false;
   },
-
-
-  renderTimer() {
-    let seconds = this.timer.remainingTime / 1000;
-    let ss = Math.floor(seconds % 60);
-    let mm = Math.floor(seconds / 60) % 60;
-    let hh = Math.floor(seconds / 3600) % 100;
-    return this.timer.isWorkTimer ? this._renderWorkTimer(hh,mm,ss) : this._renderBreakTimer(hh,mm,ss);
-  },
-
-  _renderWorkTimer(hh,mm,ss) {
-    $timerDisplay.html('');
-    return $timerDisplay.append($(`
-      <p class="work-timer-display">${(hh > 0 ? hh + ":" : '') + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
-      `));
-  },
-
-  _renderBreakTimer(hh,mm,ss) {
-
-    $timerDisplay.html('');
-    return $timerDisplay.append($(`
-      <p class="break-timer-display">${(hh > 0 ? hh + ":" : '') + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
-      `));
-  },
-
-  renderTimerInitially() {
-    $timerDisplay.html('');
-    let seconds = this.timer.duration / 1000;
-    let ss = Math.floor(seconds % 60);
-    let mm = Math.floor(seconds / 60) % 60;
-    let hh = Math.floor(seconds / 3600) % 100;
-    return $timerDisplay.append($(`
-      <p class="base-timer-display">${(hh > 0 ? hh + ":" : '') + (mm < 10 ? "0" + mm: mm) + ":" + (ss < 10 ? "0" + ss : ss)}</p>
-      `));
-  },
-
 
   setWorkDuration(minutes) {
     this.workDuration = minutes;
@@ -117,7 +81,7 @@ const Clockodoro = {
     if(this.timer && this.timer.isWorkTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderTimerInitially();
+      renderTimerInitially(this.timer);
     }
   },
 
@@ -127,7 +91,7 @@ const Clockodoro = {
     if(this.timer.isBreakTimer) {
       this.timers.splice([0],1);
       this.generateNewTimer();
-      this.renderTimerInitially();
+      renderTimerInitially(this.timer);
     }
   },
 

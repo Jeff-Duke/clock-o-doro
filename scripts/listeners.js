@@ -1,9 +1,10 @@
 const { $, $startButton, $setWorkButton, $setBreakButton, $workInput, $breakInput } = require ('./_selectors');
 const Clockodoro = require ('./clockodoro');
+const { renderTimerInitially } = require('./render-timer');
 
 $(document).ready(function() {
   Clockodoro.generateNewTimer();
-  Clockodoro.renderTimerInitially();
+  renderTimerInitially(Clockodoro.timer);
 });
 
 $startButton.on('click', function() {
