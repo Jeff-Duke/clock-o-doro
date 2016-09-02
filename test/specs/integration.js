@@ -47,29 +47,42 @@ describe('Clockodoro', function() {
         workDurationInput.setValue(10);
         browser.click('#set-work-duration-button');
 
-        let timerDisplay = browser.getText('#timer-display');
-        assert.equal(timerDisplay, '10:00');
+        let timerDisplay = browser.element('#timer-display');
+        assert.equal(timerDisplay.getText(), '10:00');
     });
 
-    it.skip('should take a new break duration in the set break duration field, and change the timer when the set break duration button is clicked', function() {
+    it('should take a new break duration in the set break duration field, and change the timer when the set break duration button is clicked', function() {
       let workDurationInput = browser.element('#work-input');
       let breakDurationInput = browser.element('#break-input');
-
-      workDurationInput.setValue(0.01);
-      browser.click('#set-work-duration-button');
-      breakDurationInput.setValue(30);
-      browser.click('#set-break-duration-button');
-      browser.click('#start-button');
-      browser.waitForVisible('break-timer-display', 2000);
-    });
-
-    it.skip('should start counting down when the start button is clicked', function() {
-      let startButton = browser.element('#start-button');
       let timerDisplay = browser.element('#timer-display');
 
-      assert.equal(timerDisplay, '25:00');
-      browser.click(startButton);
-      assert.equal(timerDisplay, '24:59');
+      workDurationInput.setValue('0.01');
+      browser.click('#set-work-duration-button');
+
+      browser.waitForText('#timer-display', 2000);
+      assert.equal(timerDisplay.getText(), '00:00');
+
+      breakDurationInput.setValue('30');
+      browser.click('#set-break-duration-button');
+
+      browser.click('#start-button');
+      browser.waitForText('.base-timer-display', 4000);
+
+
+
+      assert.equal(timerDisplay.getText(), '30:00');
+    });
+
+    it('should start counting down when the start button is clicked', function() {
+      let timerDisplay = browser.element('#timer-display');
+
+      assert.equal(timerDisplay.getText(), '30:00');
+      browser.click('#start-button');
+      browser.waitForText('#timer-display', 2000);
+
+      browser.click('#start-button');
+      browser.waitForText('#timer-display', 2000);
+      assert.equal(timerDisplay.getText(), '29:59');
     });
 
   });
